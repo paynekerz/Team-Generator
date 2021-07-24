@@ -18,8 +18,12 @@ const boilerHTML =
     <title>The Dream Team</title>
 </head>
 <body>
-    <h1>The Dream Team</h1>
-    <section class = "card-holder">`;
+    <h1 class= "header" >The Dream Team</h1>
+    <div class = "row">`;
+const closingHTML =`
+    </div>
+</body>
+</html>`
 
     
 profileBuilder = () => {
@@ -35,47 +39,49 @@ profileBuilder = () => {
                 const newEngineer = new engineer(employee.name, employee.id, employee.email, role.username)
                 card_etc = "Github Username:"
                 if(role.restart) {
-                    fs.appendFile("./dist/index.html", cardBuilder(newEngineer, card_etc))
+                    fs.appendFile("./dist/index.html", cardBuilder(newEngineer, card_etc), (err) =>{})
                     profileBuilder();
                 }
                 else{
-                    fs.appendFile("./dist/index.html", cardBuilder(newEngineer, card_etc))
+                    fs.appendFile("./dist/index.html", cardBuilder(newEngineer, card_etc, closingHTML), (err) =>{})
                 }
             })
         }
         else if (employee.role === "INTERN") {
-            inquirer.prompt(engineerQuestions)
+            inquirer.prompt(internQuestions)
             .then((role) => {
                 const newIntern = new intern(employee.name, employee.id, employee.email, role.username)
                 card_etc = "School:"
                 if(role.restart) {
-                    fs.appendFile("./dist/index.html", cardBuilder(newIntern, card_etc))
+                    fs.appendFile("./dist/index.html", cardBuilder(newIntern, card_etc), (err) =>{})
                     profileBuilder();
                 }
                 else{
-                    fs.appendFile("./dist/index.html", cardBuilder(newIntern, card_etc))
+                    fs.appendFile("./dist/index.html", cardBuilder(newIntern, card_etc, closingHTML), (err) =>{})
                 }
             })
         }
         else {
-            inquirer.prompt(engineerQuestions)
+            inquirer.prompt(managerQuestions)
             .then((role) => {
                 const newManager = new manager(employee.name, employee.id, employee.email, role.username)
                 card_etc = "Office Number:"
                 if(role.restart) {
-                    fs.appendFile("./dist/index.html", cardBuilder(newManager, card_etc))
+                    fs.appendFile("./dist/index.html", cardBuilder(newManager, card_etc), (err) =>{})
                     profileBuilder();
                 }
                 else{
-                    fs.appendFile("./dist/index.html", cardBuilder(newManager, card_etc))
+                    fs.appendFile("./dist/index.html", cardBuilder(newManager, card_etc, closingHTML), (err) =>{})
                 }
             })
         }
     })
 }
 
-cardBuilder = (employee, card_etc) => {
-        `<div class = "card-title">
+cardBuilder = (employee, card_etc, closeHTML) => {
+    let profile = `
+    <section class = "card-holder">
+        <div class = "card-title">
             <div>
                 <p class = "card-name">${employee.getName()}</p>
             </div>
@@ -85,7 +91,7 @@ cardBuilder = (employee, card_etc) => {
         </div>
         <div class= "card-body">
             <div>
-                <p class= "card-ID">${employee.getId()}</p>
+                <p class= "card-ID">ID: ${employee.getId()}</p>
             </div>
             <div>
                 <p class = "card-email">${employee.getEmail()}</p>
@@ -93,5 +99,20 @@ cardBuilder = (employee, card_etc) => {
             <div>
                 <p class = "card-etc">${card_etc}${employee.getSpecial()}</p>
             </div>
-        </div>`
+        </div>
+    </section>
+        `
+        if (closeHTML){
+            return profile + closingHTML
+        }
+        else {
+            return profile;
+        }
 }
+
+start = () => {
+    fs.writeFile("./dist/index.html", boilerHTML, (err) =>{});
+    profileBuilder(inquirer)
+}
+
+start();
