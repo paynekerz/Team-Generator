@@ -15,6 +15,6 @@ describe("employee", () => {
     })
     it("checks the engineers username", () => {
         const newEngineer = new engineer("Lorem Ipsum", 1234, "lorem@ipsum.com", "loremIpsum")
-        expect(newEngineer.username).toBe("loremIpsum") 
+        expect(newEngineer.github).toBe("loremIpsum") 
     })
 })

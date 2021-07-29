@@ -15,6 +15,6 @@ describe("manager", () => {
     })
     it("checks the managers username", () => {
         const newManager = new manager("Lorem Ipsum", 1234, "lorem@ipsum.com", 4321)
-        expect(newManager.office).toBe(4321) 
+        expect(newManager.officeNumber).toBe(4321) 
     })
 })
