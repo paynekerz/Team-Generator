@@ -1,4 +1,4 @@
-//using mini project as reference
+
 const employee = require("../lib/employee.js") 
 
 describe("employee", () => {
